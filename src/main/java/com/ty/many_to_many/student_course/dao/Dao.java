@@ -1,26 +1,32 @@
-package com.ty.many_to_one.review_product.dao;
+package com.ty.many_to_many.student_course.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import com.ty.many_to_one.review_product.dto.Product;
-import com.ty.many_to_one.review_product.dto.Review;
+import com.ty.many_to_many.student_course.dto.Course;
+import com.ty.many_to_many.student_course.dto.Student;
 
 public class Dao {
 	
 	static EntityManagerFactory factory = Persistence.createEntityManagerFactory("vikas");
 	static EntityManager entityManager = factory.createEntityManager();
 	
-	public void saveReview(Review review) {
+	public void saveDetails(Course course) {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		entityManager.persist(review);
-		if(entityManager.find(Product.class, review.getProduct().getId()) == null) {
-			entityManager.persist(review.getProduct());
+		if(entityManager.find(Course.class, course.getId()) == null) {
+			entityManager.persist(course);
+		}
+		
+		for(Student student : course.getStudents()) {
+			if(entityManager.find(Student.class, student.getId()) == null) {
+				entityManager.persist(student);
+			}
 		}
 		transaction.commit();
 	}
+	
 
 }

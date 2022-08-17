@@ -1,16 +1,20 @@
-package com.ty.many_to_one.review_product.dto;
+package com.ty.many_to_many.student_course.dto;
+
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Product {
+public class Course {
 
 	@Id
 	private int id;
 	private String name;
-	private String brand;
 	private int cost;
+	@ManyToMany
+	List<Student> students;
 
 	public int getId() {
 		return id;
@@ -28,14 +32,6 @@ public class Product {
 		this.name = name;
 	}
 
-	public String getBrand() {
-		return brand;
-	}
-
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-
 	public int getCost() {
 		return cost;
 	}
@@ -44,9 +40,17 @@ public class Product {
 		this.cost = cost;
 	}
 
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", brand=" + brand + ", cost=" + cost + "]";
+		return "Course [id=" + id + ", name=" + name + ", cost=" + cost + ", students=" + students + "]";
 	}
 
 }
